@@ -50,7 +50,7 @@ class ClusterHitCounterActor extends Actor{
     //this actor starts itself
     start
     
-    //the case objects, Increment and GetCount, are defined in HitCounter.scala
+    //the case objects, Increment and GetCount, are defined in ClusterHitCounter.scala
     def receive = {
         case Increment => count = count + 1
         case GetCount => reply(count)

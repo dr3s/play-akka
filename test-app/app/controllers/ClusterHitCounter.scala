@@ -13,13 +13,16 @@ import se.scalablesolutions.akka.remote._
  * This controller is preceded by the AkkaBootStrapJob which starts the remote node configured in application.conf, and
  * registers an actor that keeps track of hits.
 **/
+case object Increment{}
+case object GetCount{}
+
 object ClusterHitCounter extends Controller {
     
     def index = {
         //here we fetch the clusterHitCounterActor
         val clusterHitCounterActor = RemoteClient.actorFor("cluster-hit-counter", "localhost", 9999)
         
-        //next we pass it an Increment message, defined in HitCounter.scala, using fire-and-forget semantics
+        //next we pass it an Increment message using fire-and-forget semantics
         clusterHitCounterActor ! Increment
         
         //then we ask it for the current count, using send-and-receive-eventually semantics, and embed the result

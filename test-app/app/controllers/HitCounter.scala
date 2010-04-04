@@ -25,9 +25,6 @@ object HitCounter extends Controller {
     
 }
 
-case object Increment{}
-case object GetCount{}
-
 object MyActor extends Actor{
     start
     
