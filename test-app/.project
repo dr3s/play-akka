@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>testakka</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>ch.epfl.lamp.sdt.core.scalanature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.playframework.playclipse.playNature</nature>
+	</natures>
+	<linkedResources><link><name>scala-head</name><type>2</type><location>/Users/molecule/development/apps/play-1.1-unstable-r842/modules/scala-head/app</location></link>
+<link><name>akka</name><type>2</type><location>/Users/molecule/development/play/akka/app</location></link>
+<link><name>conf/akka</name><type>2</type><location>/Users/molecule/development/play/akka/conf</location></link>
+<link><name>public/akka</name><type>2</type><location>/Users/molecule/development/play/akka/public</location></link>
+</linkedResources>
+</projectDescription>
