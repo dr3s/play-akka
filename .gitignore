@@ -1,2 +1,3 @@
 test-app/tmp
 test-app/logs
+test-app/conf/akka.conf
