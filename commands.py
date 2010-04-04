@@ -55,6 +55,8 @@ def toXML(d, tabCount):
         xml = xml + tabs + "<" + key + ">\n" + toXML(value, tabCount + 1) + tabs + "</" + key + ">\n\n"
     return xml
 
+#reads the conf/application.conf file and looks for akka properties, like akka.stm.service=on
+#and turns it into an akka.conf file that can be understood by akka - places it in the conf dir.
 def createAkkaConf():
     shutil.copyfile(os.path.join(application_path, "conf/application.conf"), os.path.join(tempfile.gettempdir(), "application.conf"))
     f = open(os.path.join(tempfile.gettempdir(), "application.conf"))
@@ -71,18 +73,10 @@ def createAkkaConf():
                 parseOption(option, section)
     xml = toXML(akka, 0)
     f = open(os.path.join(application_path, "conf/akka.conf"), "w")
-    f.write("#THIS FILE IS AUTO-GENERATED FROM THE conf/application.conf FILE EVERY TIME 'play run' IS INVOKED\n")
+    f.write("#THIS FILE IS AUTO-GENERATED FROM THE conf/application.conf FILE EVERY TIME 'play akka:run' IS INVOKED\n")
     f.write(xml)
     f.close()
 
-
-
-    
-#reads the conf/application.conf file and looks for akka properties, like akka.stm.service=on
-#and turns it into an akka.conf file that can be understood by akka - places it in the conf dir.
-if play_command == 'akka:config':
-    createAkkaConf()
-    sys.exit(0)
 
 #this is stolen from the play executable.  There is a bug in the current build that does not allow one to 
 #override the if play_command == "run" section.  The only thing I'm adding here is a '-Dakka.home=...'
