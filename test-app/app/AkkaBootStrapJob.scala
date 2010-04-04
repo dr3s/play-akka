@@ -10,12 +10,18 @@ class Bootstrap extends Job {
  
     override def doJob(): Unit = {
         import se.scalablesolutions.akka.remote.RemoteNode
-        
 
-        RemoteNode.start(Some(this.getClass.getClassLoader))
-        RemoteNode.register("cluster-hit-counter", new ClusterHitCounterActor)
+        if(!ClusterHitCounterActor.clusterStarted){
+            ClusterHitCounterActor.clusterStarted = true
+            RemoteNode.start(Some(this.getClass.getClassLoader))
+            RemoteNode.register("cluster-hit-counter", new ClusterHitCounterActor)
+        }
     }
  
+}
+
+object ClusterHitCounterActor{
+    @volatile var clusterStarted = false
 }
 
 class ClusterHitCounterActor extends Actor{
