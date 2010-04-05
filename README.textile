@@ -8,9 +8,9 @@ p(note). Also, even though the Scala module is required, there is a Java API for
 
 h2. Getting Started
 
-The Scala module is required, so if you have not installed it, you can with the **install** command.
-
 p(note). It should be noted that both the Scala and akka modules require Play! 1.1, which is still under development, so until Play! 1.1 is final, use this at your own risk!  (it's more fun that way anyway!)
+
+The Scala module is required, so if you have not installed it, you can with the **install** command.
 
 bc. play install scala-head
 
