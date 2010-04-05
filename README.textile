@@ -22,7 +22,7 @@ bc. play new myApp --with scala,akka
 
 Some default akka configuration will be appended to the end of your **conf/application.conf** file.  More information on that can be found below.
 
-To include akka in an existing module add the following lines to your **conf/application.conf** file
+To include akka in an existing project add the following lines to your **conf/application.conf** file
 
 bc. module.scala=${play.path}/modules/scala-head
 module.akka=${play.path}/modules/akka
@@ -46,7 +46,7 @@ bc. play akka:start
 
 h2. Configuration
 
-A default configuration is added to **conf/application.conf**.  Detailed documentation on configuring akka can be found on the akka website, http://akkasource.org.  The traditional non-Play! akka.conf file looks something like:
+A default configuration is added to **conf/application.conf**.  "Detailed documentation":http://doc.akkasource.org/configuration on configuring akka can be found on the akka website, "http://akkasource.org":http://akkasource.org.  The traditional akka.conf (when used outside of Play!) file looks something like:
 
 bc. <akka>
         version=0.8
@@ -61,7 +61,7 @@ bc. <akka>
         ...
     </akka>
     
-This configuration is expressed in the **conf/application.conf** file by taking the node names and separating them with periods, down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
+This configuration is expressed in the Play! **conf/application.conf** file by taking the node names and separating them with periods, down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
 
 bc. akka.version=0.8
 akka.actor.timeout=5000
