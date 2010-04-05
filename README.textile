@@ -102,7 +102,7 @@ akka.log.console=on
 
 h2. Examples
 
-There are two examples included with the module, located in the sample-app folder.  To run the sample-app, make sure scala-head is installed, cd to the sample-app directory and execute:
+There are two examples included with the module, located in the sample-app folder.  To run the sample-app, make sure scala-head is installed, cd to the ${play.path}/modules/akka/sample-app directory and execute:
 
 bc. play akka:run
 
