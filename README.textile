@@ -50,7 +50,7 @@ bc. <akka>
     
 This configuration is expressed in the **conf/application.conf** file by taking the node names and separating them with periods, down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
 
-bc.akka.version=0.8
+bc. akka.version=0.8
 akka.actor.timeout=5000
 akka.stm.service=on
 
@@ -63,12 +63,12 @@ bc. <log>
 
 becomes, in the **conf/application.conf**
 
-bc.akka.log.level=debug
+bc. akka.log.level=debug
 
 
 Here is an example of what you get when you create a new application with the **new** command
 
-bc.akka.version=0.8
+bc. akka.version=0.8
 akka.actor.timeout=5000
 akka.actor.serialize-messages=off
 akka.stm.service=on
