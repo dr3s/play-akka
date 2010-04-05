@@ -106,3 +106,60 @@ if play_command == "akka:run":
         sys.exit(-1)
     print
     sys.exit(0)
+    
+# ~~~~~~~~~~~~~~~~~~~~~~ [test] Run the application tests
+if play_command == 'akka:test':
+	check_application()
+	load_modules()
+	do_classpath()
+	disable_check_jpda = False
+	if remaining_args.count('-f') == 1:
+		disable_check_jpda = True
+		remaining_args.remove('-f')
+	do_java()
+	print "~ Running in test mode"
+	print "~ Ctrl+C to stop"
+	print "~ "
+	check_jpda()
+	java_cmd.insert(2, '-Xdebug')
+	java_cmd.insert(2, '-Xrunjdwp:transport=dt_socket,address=%s,server=y,suspend=n' % jpda_port)
+	java_cmd.insert(2, '-Dplay.debug=yes')
+	java_cmd.insert(2, '-Dakka.config.file=' + os.path.join(application_path, "conf/akka.conf"))
+	try:
+		subprocess.call(java_cmd, env=os.environ)
+	except OSError:
+		print "Could not execute the java executable, please make sure the JAVA_HOME environment variable is set properly (the java executable should reside at JAVA_HOME/bin/java). "
+		sys.exit(-1)
+	print
+	sys.exit(0)
+
+if play_command == 'akka:start':
+    check_application()
+    load_modules()
+    do_classpath()
+    do_java()
+    if os.path.exists(pid_path):
+        print "~ Oops. %s is already started! (or delete %s)" % (os.path.normpath(application_path), os.path.normpath(pid_path))
+        print "~"
+        sys.exit(1)
+	
+    sysout = readConf('application.log.system.out')
+    sysout = sysout!='false' and sysout!='off'
+    if not sysout:
+        sout = None
+    else:
+        sout = open(os.path.join(log_path, 'system.out'), 'w')
+    try:
+        java_cmd.insert(2, '-Dakka.config.file=' + os.path.join(application_path, "conf/akka.conf"))
+        pid = subprocess.Popen(java_cmd, stdout=sout, env=os.environ).pid
+    except OSError:
+        print "Could not execute the java executable, please make sure the JAVA_HOME environment variable is set properly (the java executable should reside at JAVA_HOME/bin/java). "
+        sys.exit(-1)
+    print "~ OK, %s is started" % os.path.normpath(application_path)
+    if sysout:
+        print "~ output is redirected to %s" % os.path.normpath(os.path.join(log_path, 'system.out'))
+    pid_file = open(pid_path, 'w')
+    pid_file.write(str(pid))
+    print "~ pid is %s" % pid
+    print "~"
+    sys.exit(0)

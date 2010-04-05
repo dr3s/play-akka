@@ -1,5 +1,0 @@
-02:11:50,140 INFO  ~ Starting /Users/molecule/development/play/testakka
-02:11:50,144 INFO  ~ Module akka is available (/Users/molecule/development/play/akka)
-02:11:50,144 INFO  ~ Module scala is available (/Users/molecule/development/apps/play-1.1-unstable-r842/modules/scala-head)
-02:11:50,938 WARN  ~ You're running Play! in DEV mode
-02:11:51,044 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
