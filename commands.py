@@ -77,6 +77,15 @@ def createAkkaConf():
     f.write(xml)
     f.close()
 
+if play_command == "new":
+    module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py","")
+    f = open(os.path.join(module_dir, "resources/akka_play.conf"))
+    text = f.read() 
+    f.close()
+    f = open(os.path.join(application_path, "conf/application.conf"), "a")
+    f.write(text)
+    f.close
+    
 
 #this is stolen from the play executable.  There is a bug in the current build that does not allow one to 
 #override the if play_command == "run" section.  The only thing I'm adding here is a '-Dakka.home=...'
