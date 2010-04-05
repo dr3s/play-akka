@@ -33,6 +33,17 @@ bc. play akka:run
 
 (the above command will be changed to "play run" when a bug is fixed in the Play! 1.1 branch)
 
+h2. Commands
+
+All of these commands will be phased out when a bug is fixed in the 1.1 branch and they aren't needed any more.  Until then, use them instead of their counterparts
+
+bc. play akka:run
+
+bc. play akka:test
+
+bc. play akka:start
+
+
 h2. Configuration
 
 A default configuration is added to **conf/application.conf**.  Detailed documentation on configuring akka can be found on the akka website, http://akkasource.org.  The traditional non-Play! akka.conf file looks something like:
