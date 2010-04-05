@@ -46,7 +46,7 @@ bc. play akka:start
 
 h2. Configuration
 
-When used outside of The Play! framework, akka is configured with an akka.conf file.  This plugin allows you to use the Play! ** conf/application.conf** file to configure akka.  A default configuration is added to **conf/application.conf**.  "Detailed documentation":http://doc.akkasource.org/configuration on configuring akka can be found on the akka website, "http://akkasource.org":http://akkasource.org.  The traditional akka.conf (when used outside of Play!) file looks something like:
+When used outside of The Play! framework, akka is configured with an akka.conf file.  This plugin allows you to use the Play! **conf/application.conf** file to configure akka.  A default configuration is added to **conf/application.conf**.  "Detailed documentation":http://doc.akkasource.org/configuration on configuring akka can be found on the akka website, "http://akkasource.org":http://akkasource.org.  The traditional akka.conf (when used outside of Play!) file looks something like:
 
 bc. <akka>
         version=0.8
