@@ -10,6 +10,8 @@ h2. Getting Started
 
 The Scala module is required, so if you have not installed it, you can with the **install** command.
 
+p(note). It should be noted that both the Scala and akka modules require Play! 1.1, which is still under development, so until Play! 1.1 is final, use this at your own risk!  (it's more fun that way anyway!)
+
 bc. play install scala-head
 
 Once that's done, go ahead and install the akka module
