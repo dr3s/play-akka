@@ -2,7 +2,7 @@ h1. akka support
 
 "akka":http://akkasource.org is a platform for building simple, correct, fault-tolerant, concurrent, and scalable applications for the JVM.  This module allows you to configure akka through The Play! framework's conf/application.conf file; it provides a few command-line scripts to start akka when your application starts; and it has some examples of it in action.
 
-p(note). **it does not include akka's REST or comet libraries** those libraries are built upon java servlets, which The Play! framework does not use.  However, one could easily use The Play! framework's REST support in conjunction with akka to perform exactly the same tasks, and the same is true for akka's comet support.
+p(note). **This module does not include akka's REST or comet libraries** those libraries are built upon java servlets, which The Play! framework does not use.  However, one could easily use The Play! framework's REST support in conjunction with akka to perform exactly the same tasks, and the same is true for akka's comet support.
 
 p(note). Also, even though the Scala module is required, there is a Java API for akka.  I enjoy programming in Scala, and I have not looked much at the Java API, so the examples are all in Scala.  If you'd like to contribute some examples of the Java API, I'd be more than happy to include them!
 
