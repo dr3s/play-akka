@@ -6,36 +6,26 @@ import play.mvc._
 import se.scalablesolutions.akka.actor._
 import se.scalablesolutions.akka.stm._
 import se.scalablesolutions.akka.stm.Transaction._
+import se.scalablesolutions.akka.stm.Transaction.Local._
 
 
 
 object HitCounter extends Controller {
     
     val ref = TransactionalRef[Int]
+    var dumbCount = 0
     
     def index = {
-        MyActor ! Increment
-        val reply: Option[Any] = MyActor !! GetCount
-        val count: Int = reply match {
-            case Some(i: Int) => i
-            case _ => 0
+        dumbCount = dumbCount + 1
+        val count = atomic{
+            val i = ref.get.getOrElse(0) + 1
+            ref.swap(i)
+            i
         }
-        <h1>{count}</h1>
+        <div>
+            <h1>{count}</h1>
+            <h1>{dumbCount}</h1>
+        </div>
     }
     
-}
-
-object MyActor extends Actor{
-    start
-    
-    val ref = TransactionalRef[Int]
-    
-    def receive = {
-        case Increment =>
-            atomic{
-                val i: Int = ref.get.getOrElse(0) + 1
-                ref.swap(i)
-            }
-        case GetCount => reply(atomic{ ref.get.getOrElse(0) })
-    }
 }
