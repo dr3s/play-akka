@@ -12,8 +12,8 @@ import se.scalablesolutions.akka.stm.Transaction.Local._
 /**
  * This example shows Software Transactional Memory (STM) in action.
  * The Controller has two hit counters, which are incremented every time someone visits the page.
- * One of the hit counters is kept in STM, while the other is not.  If enough hits are sent to the page
- * The one without STM (dumbCounter) will see problems due to race conditions, while the other will not.
+ * One of the hit counters is kept in STM, while the other is not.  If enough hits are sent to the page,
+ * the one without STM (dumbCounter) will see problems due to race conditions, while the other will not.
  * Check out the screencast for further discussion: http://vimeo.com/10764693
 **/
 object HitCounter extends Controller {
