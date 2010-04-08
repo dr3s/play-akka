@@ -6,7 +6,7 @@ p(note). **Note on akka's REST and comet libraries** though the REST and comet j
 
 p(note). Also, even though the Scala module is required, there is a Java API for akka.  I enjoy programming in Scala, and I have not looked much at the Java API, so the examples are all in Scala.  If you'd like to contribute some examples of the Java API, I'd be more than happy to include them!
 
-**There are a couple of screencasts** 
+**There are some of screencasts** 
 
 "Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693 
 
@@ -22,7 +22,7 @@ bc. play install scala-head
 
 Once that's done, go ahead and install the akka module
 
-bc. play install akka
+bc. play install akka-head
 
 You can then create a new Play! project, called "myApp", with
 
@@ -123,13 +123,15 @@ akka.log.console=on
 
 h2. Examples
 
-There are two examples included with the module, located in the sample-app folder.  To run the sample-app, make sure scala-head is installed, cd to the ${play.path}/modules/akka/sample-app directory and execute:
+There are some examples included with the module, located in the sample-app folder.  To run the sample-app, make sure scala-head is installed, cd to the ${play.path}/modules/akka/sample-app directory and execute:
 
 bc. play akka:run
 
-The two examples are both hit counters that illustrate two different aspects of akka, and are both thoroughly explored in these two screencasts: "Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693
+The examples are all hit counters that illustrate different aspects of akka, and are thoroughly explored in the screencasts: "Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693
 two
 
 The first example is in **app/controllers/HitCounter.scala**, and can be accessed at http://localhost:9000/hitCounter  It illustrates how to use Software Transactional Memory (STM).  Every time a user hits that URL, the hit counter will be increased.  Operations on the TransactionalRef must occur in the context of a transaction, which is atomic, isolated, and consistent, which basically means, if two requests try to update the reference at the same time, one will win and one will lose.  When the one that loses, loses, it will automatically retry the update, so if 20,000 people visit the site, the hit counter will accurately report 20,000.  This is thoroughly explored, along with implications, in the "screencast":http://vimeo.com/10764693.
 
-The second example shows a hit counter that works in a clustered environment and is located in **app/controllers/ClusteredHitCounter.scala** along with **app/AkkaBootStrapJob.scala**.  The previous example will accurately report hits in a single server environment, but when multiple servers are clustered together, the number will report how many users have hit a given server, not the cluster as a whole.  To accurately tally the number of hits on a cluster as a whole, a server managed actor is registered to keep track of hits and report them when asked.  This example is a little more involved because to see it in action, multiple servers need to be started - it's fully explored in the screencast.
+The second example, also a hit counter, is in **app/controllers/ActorHitCounter.scala**, and can be accessed at http://localhost:9000/actorHitCounter It shows some very rudimentary actors stuff.  If you are unfamiliar with The Actors Pattern, the screencast gives an overview of it, and show some different methods of working with akka actors.  This example doesn't show anything you couldn't do with the actors library included with the Scala distribution - to see the really cool stuff, take a look at the next example.
+
+The third example shows a hit counter that works in a clustered environment and is located in **app/controllers/ClusteredHitCounter.scala** along with **app/AkkaBootStrapJob.scala**.  The previous examples will accurately report hits in a single server environment, but when multiple servers are clustered together, the number will report how many users have hit a given server, not the cluster as a whole.  To accurately tally the number of hits on a cluster as a whole, a server managed actor is registered to keep track of hits and report them when asked.  This example is a little more involved because to see it in action, multiple servers need to be started - it's fully explored in the screencast.
