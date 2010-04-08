@@ -2,9 +2,15 @@ h1. akka support
 
 "akka":http://akkasource.org is a platform for building simple, correct, fault-tolerant, concurrent, and scalable applications for the JVM.  This module allows you to configure akka through The Play! framework's conf/application.conf file; it provides a few command-line scripts to start akka when your application starts; and it has some examples of it in action.
 
-p(note). **This module does not include akka's REST or comet libraries** those libraries are built upon java servlets, which The Play! framework does not use.  However, one could easily use The Play! framework's REST support in conjunction with akka to perform exactly the same tasks, and the same is true for akka's comet support.
+p(note). **Note on akka's REST and comet libraries** though the REST and comet jars are included in the distribution of this module, I discourage you from using them.  They are built to work with servlets, and probably will not do what you expect.  If you want to create RESTful web services, or use comet, I suggest you stick with the methods provided by Play! - using akka with Play! is easy, and mimicking the functionality provided by akka's REST and comet libraries is trivial.
 
 p(note). Also, even though the Scala module is required, there is a Java API for akka.  I enjoy programming in Scala, and I have not looked much at the Java API, so the examples are all in Scala.  If you'd like to contribute some examples of the Java API, I'd be more than happy to include them!
+
+**There are a couple of screencasts** 
+
+"Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693 
+
+two
 
 h2. Getting Started
 
@@ -63,7 +69,7 @@ bc. <akka>
         ...
     </akka>
     
-This configuration is expressed in the Play! **conf/application.conf** file by taking the node names and separating them with periods, down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
+This configuration is expressed in the Play! **conf/application.conf** file by taking the node names and separating them with periods down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
 
 bc. akka.version=0.8
 akka.actor.timeout=5000
@@ -83,7 +89,7 @@ bc. akka.log.level=debug
 
 Here is an example of what you get when you create a new application with the **new** command
 
-bc. akka.version=0.8
+bc. akka.version=0.8.1
 akka.actor.timeout=5000
 akka.actor.serialize-messages=off
 akka.stm.service=on
@@ -121,8 +127,8 @@ There are two examples included with the module, located in the sample-app folde
 
 bc. play akka:run
 
-The two examples are both hit counters that illustrate two different aspects of akka, and are both thoroughly explored in these two screencasts: one, two
+The two examples are both hit counters that illustrate two different aspects of akka, and are both thoroughly explored in these two screencasts: "one":http://vimeo.com/10764693, two
 
-The first example is in **app/controllers/HitCounter.scala**, and can be accessed at http://localhost:9000/hitCounter  It illustrates how to use Software Transactional Memory (STM).  Every time a user hits that URL, the hit counter will be increased.  Operations on the TransactionalRef must occur in the context of a transaction, which is atomic, isolated, and consistent, which basically means, if two requests try to update the reference at the same time, one will win and one will lose.  When the one that loses, loses, it will automatically retry the update, so if 20,000 people visit the site, the hit counter will accurately report 20,000.  This is thoroughly explored, along with implications, in the screencast.
+The first example is in **app/controllers/HitCounter.scala**, and can be accessed at http://localhost:9000/hitCounter  It illustrates how to use Software Transactional Memory (STM).  Every time a user hits that URL, the hit counter will be increased.  Operations on the TransactionalRef must occur in the context of a transaction, which is atomic, isolated, and consistent, which basically means, if two requests try to update the reference at the same time, one will win and one will lose.  When the one that loses, loses, it will automatically retry the update, so if 20,000 people visit the site, the hit counter will accurately report 20,000.  This is thoroughly explored, along with implications, in the "screencast"http://vimeo.com/10764693.
 
 The second example shows a hit counter that works in a clustered environment and is located in **app/controllers/ClusteredHitCounter.scala** along with **app/AkkaBootStrapJob.scala**.  The previous example will accurately report hits in a single server environment, but when multiple servers are clustered together, the number will report how many users have hit a given server, not the cluster as a whole.  To accurately tally the number of hits on a cluster as a whole, a server managed actor is registered to keep track of hits and report them when asked.  This example is a little more involved because to see it in action, multiple servers need to be started - it's fully explored in the screencast.
