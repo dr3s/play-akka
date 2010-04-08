@@ -5,6 +5,7 @@
 # Home page
 GET     /                                       Application.index
 GET     /hitCounter                             HitCounter.index
+GET     /actorHitCounter                        ActorHitCounter.index
 GET     /clusterHitCounter                      ClusterHitCounter.index
 
 # Map static resources from the /app/public folder to the /public path

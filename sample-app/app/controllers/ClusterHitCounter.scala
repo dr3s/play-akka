@@ -13,9 +13,6 @@ import se.scalablesolutions.akka.remote._
  * This controller is preceded by the AkkaBootStrapJob which starts the remote node configured in application.conf, and
  * registers an actor that keeps track of hits.
 **/
-case object Increment{}
-case object GetCount{}
-
 object ClusterHitCounter extends Controller {
     
     def index = {
