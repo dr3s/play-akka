@@ -23,8 +23,8 @@ object HitCounter extends Controller {
             i
         }
         <div>
-            <h1>{count}</h1>
-            <h1>{dumbCount}</h1>
+            <h1>Count: {count}</h1>
+            <h1>Dumb Count: {dumbCount}</h1>
         </div>
     }
     
