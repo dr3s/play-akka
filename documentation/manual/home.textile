@@ -1,0 +1,146 @@
+h1. akka support
+
+"akka":http://akkasource.org is a platform for building simple, correct, fault-tolerant, concurrent, and scalable applications for the JVM.  This module allows you to configure akka through The Play! framework's conf/application.conf file; it provides a few command-line scripts to start akka when your application starts; and it has some examples of it in action.
+
+p(note). **Note on akka's REST, Comet, Spring, Guice, Camel, and AQMP libraries** I've taken these out of the akka module.  The REST and Comet libraries are built to work with servlets, and probably will not work how you expect them to. However, because Play! already includes such great support for REST and comet, you really don't need the REST and comet support from akka. Also, I did not include the Spring or Guice support for akka, because I did not want to stomp on the Spring and Guice Play! modules (did somebody say OSGi?). And lastly I've left out the Camel and AQMP support because I wanted to reduce the amount of dependencies.  If you'd like to include akka support for these, you can download the jars and put them on your classpath.  Peter Hausel and I have talked about making additional Play! modules for these in the future.
+
+p(note). Also, even though the Scala module is required, there is a Java API for akka.  I enjoy programming in Scala, and I have not looked much at the Java API, so the examples are all in Scala.  If you'd like to contribute some examples of the Java API, I'd be more than happy to include them!
+
+**There are some of screencasts** 
+
+"Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693 
+
+"Screencast Two for the akka Play! Module. Rudimentary Actors":http://vimeo.com/10792173
+
+**watch the third one if nothing else!**
+"Screencast Three for the akka Play! module. Remote Actors":http://vimeo.com/10793443
+
+h2. Getting Started
+
+p(note). It should be noted that both the Scala and akka modules require Play! 1.1, which is still under development, so until Play! 1.1 is final, use this at your own risk!  (it's more fun that way anyway!)
+
+The Scala module is required, so if you have not installed it, you can with the **install** command.
+
+bc. play install scala-head
+
+Once that's done, go ahead and install the akka module
+
+bc. play install akka-head
+
+You can then create a new Play! project, called "myApp", with
+
+bc. play new myApp --with scala-head,akka-head
+
+Some default akka configuration will be appended to the end of your **conf/application.conf** file.  More information on that can be found below.
+
+To include akka in an existing project add the following lines to your **conf/application.conf** file
+
+bc. module.scala=${play.path}/modules/scala-head
+module.akka=${play.path}/modules/akka
+
+To **run** your application execute
+
+bc. play akka:run 
+
+(the above command will be changed to "play run" when a bug is fixed in the Play! 1.1 branch)
+
+h2. Commands
+
+All of these commands will be phased out when a bug is fixed in the 1.1 branch and they aren't needed any more.  Until then, use them instead of their counterparts
+
+bc. play akka:run
+
+bc. play akka:test
+
+bc. play akka:start
+
+
+h2. Configuration
+
+When used outside of The Play! framework, akka is configured with an akka.conf file.  This plugin allows you to use the Play! **conf/application.conf** file to configure akka.  A default configuration is added to **conf/application.conf**.  "Detailed documentation":http://doc.akkasource.org/configuration on configuring akka can be found on the akka website, "http://akkasource.org":http://akkasource.org.  The traditional akka.conf (when used outside of Play!) file looks something like:
+
+bc. <akka>
+        version=0.8
+        <actor>
+            timeout=5000
+            ...
+        </actor>
+        <stm>
+            service=on
+            ...
+        </stm>
+        ...
+    </akka>
+    
+This configuration is expressed in the Play! **conf/application.conf** file by taking the node names and separating them with periods down to the property name and then separating that with an equals sign followed by the value, or more simply, the above becomes
+
+bc. akka.version=0.8
+akka.actor.timeout=5000
+akka.stm.service=on
+
+p(note). the akka.conf file contains a log section.  In this module, we append an "akka." to the "log", so in the akka.conf file, the following section
+
+bc. <log>
+    level=debug
+    ...
+</log>
+
+becomes, in the **conf/application.conf**
+
+bc. akka.log.level=debug
+
+
+Here is an example of what you get when you create a new application with the **new** command
+
+bc. akka.version=0.8.1
+akka.actor.timeout=5000
+akka.actor.serialize-messages=off
+akka.stm.service=on
+akka.stm.fair=on
+akka.stm.max-nr-of-retries=1000
+akka.stm.timeout = 10000
+akka.remote.compression-scheme=zlib
+akka.remote.zlib-compression-level=6
+akka.remote.cluster.service=on
+akka.remote.cluster.name=default
+akka.remote.cluster.actor=se.scalablesolutions.akka.cluster.jgroups.JGroupsClusterActor
+akka.remote.cluster.serializer=se.scalablesolutions.akka.serialization.Serializer$Java$
+akka.remote.server.service=on
+akka.remote.server.hostname=localhost
+akka.remote.server.port=9999
+akka.remote.server.connection-timeout=1000
+akka.remote.client.reconnect-delay=5000
+akka.remote.client.read-timeout=10000
+akka.storage.cassandra.hostname=127.0.0.1
+akka.storage.cassandra.port=9160
+akka.storage.cassandra.consistency-level=QUORUM
+akka.storage.mongodb.hostname=127.0.0.1
+akka.storage.mongodb.port=27017
+akka.storage.mongodb.dbname=mydb
+akka.storage.redis.hostname=127.0.0.1
+akka.storage.redis.port=6379
+akka.log.filename=./logs/akka.log
+akka.log.roll=daily
+akka.log.level=debug
+akka.log.console=on
+
+h2. Examples
+
+There are some examples included with the module, located in the sample-app folder.  To run the sample-app, make sure scala-head is installed, cd to the ${play.path}/modules/akka/sample-app directory and execute:
+
+bc. play akka:run
+
+The examples are all hit counters that illustrate different aspects of akka, and are thoroughly explored in the screencasts: 
+
+"Screencast One for the akka module for The Play! framework":http://vimeo.com/10764693 
+
+"Screencast Two for the akka Play! Module. Rudimentary Actors":http://vimeo.com/10792173
+
+**watch the third one if nothing else!**
+"Screencast Three for the akka Play! module. Remote Actors":http://vimeo.com/10793443
+
+The first example is in **app/controllers/HitCounter.scala**, and can be accessed at http://localhost:9000/hitCounter  It illustrates how to use Software Transactional Memory (STM).  Every time a user hits that URL, the hit counter will be increased.  Operations on the TransactionalRef must occur in the context of a transaction, which is atomic, isolated, and consistent, which basically means, if two requests try to update the reference at the same time, one will win and one will lose.  When the one that loses, loses, it will automatically retry the update, so if 20,000 people visit the site, the hit counter will accurately report 20,000.  This is thoroughly explored, along with implications, in the "screencast":http://vimeo.com/10764693.
+
+The second example, also a hit counter, is in **app/controllers/ActorHitCounter.scala**, and can be accessed at http://localhost:9000/actorHitCounter It shows some very rudimentary actors stuff.  If you are unfamiliar with The Actors Pattern, the "screencast":http://vimeo.com/10792173 gives an overview of it, and show some different methods of working with akka actors.  This example doesn't show anything you couldn't do with the actors library included with the Scala distribution - to see the really cool stuff, take a look at the next example.
+
+The third example shows a hit counter that works in a clustered environment and is located in **app/controllers/ClusteredHitCounter.scala** along with **app/AkkaBootStrapJob.scala**.  The previous examples will accurately report hits in a single server environment, but when multiple servers are clustered together, the number will report how many users have hit a given server, not the cluster as a whole.  To accurately tally the number of hits on a cluster as a whole, a server managed actor is registered to keep track of hits and report them when asked.  This example is a little more involved because to see it in action, multiple servers need to be started - it's fully explored in the "screencast":http://vimeo.com/10793443.
