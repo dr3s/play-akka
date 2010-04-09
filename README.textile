@@ -29,7 +29,7 @@ bc. play install akka-head
 
 You can then create a new Play! project, called "myApp", with
 
-bc. play new myApp --with scala,akka
+bc. play new myApp --with scala-head,akka-head
 
 Some default akka configuration will be appended to the end of your **conf/application.conf** file.  More information on that can be found below.
 
