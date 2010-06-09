@@ -4,6 +4,7 @@ import play._
 import play.mvc._
 
 import se.scalablesolutions.akka.actor._
+import se.scalablesolutions.akka.actor.Actor._
 
 /**
  * This shows some rudimentary Actors stuff.
@@ -12,9 +13,7 @@ import se.scalablesolutions.akka.actor._
 object ActorHitCounter extends Controller {
     
     //setting up an actor to keep track of hits - don't forget to start it!
-    val hitCounter = new HitCounterActor
-    hitCounter.start
-    
+    val hitCounter = actorOf[HitCounterActor].start
     
     def index = {
         
@@ -23,14 +22,6 @@ object ActorHitCounter extends Controller {
         
         //fetch the count using send-and-receive-eventually semantics
         var count = (hitCounter !! (GetCount, 1000)).getOrElse(0)
-        
-        //fetch the count again using send-and-receive-future semantics
-        val f = hitCounter !!! GetCount
-        f.await
-        count = f.result match {
-            case Some(i: Int) => i
-            case _ => 0
-        }
         
         //display the result
        <h1>{count}</h1>

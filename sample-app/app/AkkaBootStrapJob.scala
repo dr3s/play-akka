@@ -4,6 +4,7 @@ import play.test._
 
 import controllers.{Increment,GetCount}
 import se.scalablesolutions.akka.actor._
+import se.scalablesolutions.akka.actor.Actor._
  
  /**
   * This class runs when the play! app starts.  All of the logic in this job is used to setup the ClusterHitCounter example.
@@ -23,12 +24,12 @@ class Bootstrap extends Job {
             //this starts a new remote node using the settings in the application.conf file under akka.remote.server
             //we are passing it the classloader that loaded this class, because it should be able to load all classes
             //we are using in this example.
-            RemoteNode.start(Some(this.getClass.getClassLoader))
+            RemoteNode.start(this.getClass.getClassLoader)
             
             //here we are registering a new instance of ClusterHitCounter with our remote node, which will be looked up
             //by the ClusterHitCounter.index method (this is a controller, in the controllers directory).  This actor 
             //keeps track of and reports hits.  This is an example of Server Managed Remote Actors
-            RemoteNode.register("cluster-hit-counter", new ClusterHitCounterActor)
+            RemoteNode.register("cluster-hit-counter", actorOf(new ClusterHitCounterActor).start)
         }
     }
  
@@ -47,8 +48,6 @@ class ClusterHitCounterActor extends Actor{
     //private member var to keep track of hits.
     private var count = 0
     
-    //this actor starts itself
-    start
     
     //the case objects, Increment and GetCount, are defined in ClusterHitCounter.scala
     def receive = {
